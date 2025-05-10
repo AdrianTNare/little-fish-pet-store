@@ -1,8 +1,5 @@
-import { UUID } from "crypto";
-import { UUIDTypes } from "uuid";
-
 export interface Product {
-  id: UUIDTypes;
+  id: number;
   name: string;
   price: number;
   description: string;

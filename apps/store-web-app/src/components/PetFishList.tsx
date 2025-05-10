@@ -3,23 +3,14 @@
 import { fishProducts } from "@/fixtures/fishProducts";
 import { FishProductCard } from "./FishProductCard";
 import { Box, Button } from "@mui/material";
-import { Modal, Typography } from "@mui/material";
-import { useState } from "react";
-import { CartModal } from "./Modals/CartModal";
+import { useCartModal } from "./hooks/useCartModal";
 
 export const PetFishList = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const onOpenModal = () => {
-    setIsModalOpen(true);
-  };
-  const onCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const { onOpenModal, CartModal } = useCartModal();
 
   return (
     <>
-      <CartModal isModalOpen={isModalOpen} onCloseModal={onCloseModal} />
+      <CartModal />
 
       <Box position="relative" overflow="scroll" height="80vh">
         {fishProducts.map((pet) => (

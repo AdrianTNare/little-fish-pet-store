@@ -2,6 +2,7 @@ import { checkoutBillItems } from "@/fixtures/fishProducts";
 import { Box, Button } from "@mui/material";
 import { Modal, Typography } from "@mui/material";
 import { CartItem } from "../CartItem";
+import { CartModalProps } from "@/types/modal";
 
 const style = {
   position: "absolute",
@@ -15,12 +16,7 @@ const style = {
   p: 4,
 };
 
-interface Props {
-  isModalOpen: boolean;
-  onCloseModal: () => void;
-}
-
-export const CartModal = ({ isModalOpen, onCloseModal }: Props) => {
+export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
   return (
     <Modal
       open={isModalOpen}
