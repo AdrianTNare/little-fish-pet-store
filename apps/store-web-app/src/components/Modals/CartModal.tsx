@@ -3,6 +3,8 @@ import { Box, Button } from "@mui/material";
 import { Modal, Typography } from "@mui/material";
 import { CartItem } from "../CartItem";
 import { CartModalProps } from "@/types/modal";
+import { useAppSelector } from "@/hooks/store";
+import { getProducts } from "@/stores/slices/cartSlice";
 
 const style = {
   position: "absolute",
@@ -17,6 +19,10 @@ const style = {
 };
 
 export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
+  const products = useAppSelector(getProducts);
+
+  console.log({ products });
+
   return (
     <Modal
       open={isModalOpen}

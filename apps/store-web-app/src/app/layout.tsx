@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 //import ModeSwitch from "@/components/ModeSwitch";
 import { theme } from "@/theme";
+import { StoreProvider } from "./StoreProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -24,32 +25,34 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable}`}>
-        <InitColorSchemeScript attribute="class" />
+    <StoreProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${inter.variable}`}>
+          <InitColorSchemeScript attribute="class" />
 
-        {/*
+          {/*
 
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
         */}
 
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
 
-          {/*
+            {/*
 
             <ModeSwitch />
         */}
 
-          {children}
-        </ThemeProvider>
+            {children}
+          </ThemeProvider>
 
-        {/*
+          {/*
         </AppRouterCacheProvider>
 
         */}
-      </body>
-    </html>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }
