@@ -18,7 +18,7 @@ export const useModal = <T extends CartModalProps>(Modal: FC<T>) => {
   //TODO: we could pass the other props as {...props}
   const CartModal: FC<Omit<T, keyof CartModalProps>> = (props) => (
     <Modal
-      {...(props as any)}
+      {...(props as T)}
       onCloseModal={onCloseModal}
       isModalOpen={isModalOpen}
     />

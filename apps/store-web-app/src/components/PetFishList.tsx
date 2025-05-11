@@ -1,21 +1,89 @@
 "use client";
 
-import { fishProducts } from "@/fixtures/fishProducts";
+//import { fishProducts } from "@/fixtures/fishProducts";
 import { FishProductCard } from "./FishProductCard";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { useCartModal } from "./hooks/useCartModal";
+import { useState } from "react";
+import { PaginationInput } from "@/types/product";
+import { useGetAllPetFishQuery } from "@/stores/slices/api/productsApiSlice";
 
 export const PetFishList = () => {
   const { onOpenModal, CartModal } = useCartModal();
 
+  const [paginationInput, setPaginationInput] = useState<PaginationInput>({
+    page: 1,
+    size: 10,
+  });
+
+  const {
+    data,
+    isLoading,
+    error: isError,
+  } = useGetAllPetFishQuery(paginationInput);
+
+  const onNextPage = () => {
+    setPaginationInput((currentInput) => ({
+      ...currentInput,
+      page:
+        !data?.total || data.total / currentInput.size > currentInput.page
+          ? currentInput.page + 1
+          : currentInput.page,
+    }));
+  };
+
+  const onPreviousPage = () => {
+    setPaginationInput((currentInput) => ({
+      ...currentInput,
+      page: currentInput.page > 1 ? currentInput.page - 1 : 1,
+    }));
+  };
+
   return (
     <>
       <CartModal />
+      <Box position="relative">
+        <Box
+          width="100%"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+        >
+          <Box display="flex" justifyContent="center" width="100%" overflow="scroll" height="68vh">
+            <Grid container spacing={2} width="100%" sx={{ maxWidth: 840 }}>
+              {isError && <p>Error: failed to load data</p>}
 
-      <Box position="relative" overflow="scroll" height="80vh">
-        {fishProducts.map((pet) => (
-          <FishProductCard key={pet.name} product={pet} />
-        ))}
+              {isLoading && <p>Loading...</p>}
+
+              {data?.products && (
+                <>
+                  {data.products.map((pet) => (
+                    <FishProductCard key={pet.name} product={pet} />
+                  ))}
+                </>
+              )}
+            </Grid>
+          </Box>
+
+          {data?.total && (
+            <Typography variant="body2" mb={2}>
+              Total: {data.total}
+            </Typography>
+          )}
+          <Box display="flex" alignItems="center" columnGap={2}>
+            <Button size="small" onClick={onPreviousPage}>
+              Previous
+            </Button>
+
+            <Typography variant="body2">
+              page: {paginationInput.page}
+            </Typography>
+
+            <Button size="small" onClick={onNextPage}>
+              Next
+            </Button>
+          </Box>
+        </Box>
 
         <Box
           position="sticky"

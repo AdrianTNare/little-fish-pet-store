@@ -1,7 +1,5 @@
 import { CartItem, Product } from "@/types/product";
-import { v4 as uuidv4 } from "uuid";
 
-// make a
 export const fishProducts: Product[] = [
   {
     id: 1,

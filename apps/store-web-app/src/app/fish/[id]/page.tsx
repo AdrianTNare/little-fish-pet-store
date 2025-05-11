@@ -1,9 +1,7 @@
 import { AddToCartTrigger } from "@/components/AddToCartTrigger";
-import { FishProductCard } from "@/components/FishProductCard";
-import { useCartModal } from "@/components/hooks/useCartModal";
 import { ProductCartTrigger } from "@/components/ProductCartTrigger";
 import { fishProducts } from "@/fixtures/fishProducts";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface Params {
   id: string;

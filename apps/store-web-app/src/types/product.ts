@@ -8,3 +8,8 @@ export interface Product {
 export interface CartItem extends Omit<Product, "description"> {
   quantity: number;
 }
+
+export interface PaginationInput {
+  page: number;
+  size: number;
+}
