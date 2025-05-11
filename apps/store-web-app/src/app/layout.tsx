@@ -25,16 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <StoreProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body className={`${inter.variable}`}>
-          <InitColorSchemeScript attribute="class" />
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable}`}>
+        <InitColorSchemeScript attribute="class" />
 
-          {/*
+        {/*
 
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
         */}
 
+        <StoreProvider>
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
@@ -46,13 +46,13 @@ export default function RootLayout({
 
             {children}
           </ThemeProvider>
+        </StoreProvider>
 
-          {/*
+        {/*
         </AppRouterCacheProvider>
 
         */}
-        </body>
-      </html>
-    </StoreProvider>
+      </body>
+    </html>
   );
 }

@@ -38,7 +38,7 @@ export default async function Product({ params }: Props) {
 
           <Typography fontSize="small">{product.description}</Typography>
 
-          <AddToCartTrigger />
+          <AddToCartTrigger product={product} />
         </>
       )}
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { FC, useState } from "react";
-import { AddToCartModal as Modal } from "../Modals/AddToCartModal";
+import { CartModalProps } from "@/types/modal";
 
 //TODO; make this hook reusable for both modals
-export const useAddCartModal = () => {
+export const useModal = <T extends CartModalProps>(Modal: FC<T>) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onCloseModal = () => {
@@ -16,8 +16,12 @@ export const useAddCartModal = () => {
   };
 
   //TODO: we could pass the other props as {...props}
-  const CartModal: FC = () => (
-    <Modal onCloseModal={onCloseModal} isModalOpen={isModalOpen} />
+  const CartModal: FC<Omit<T, keyof CartModalProps>> = (props) => (
+    <Modal
+      {...(props as any)}
+      onCloseModal={onCloseModal}
+      isModalOpen={isModalOpen}
+    />
   );
 
   return {

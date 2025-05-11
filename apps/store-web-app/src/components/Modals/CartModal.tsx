@@ -1,10 +1,14 @@
-import { checkoutBillItems } from "@/fixtures/fishProducts";
 import { Box, Button } from "@mui/material";
 import { Modal, Typography } from "@mui/material";
 import { CartItem } from "../CartItem";
 import { CartModalProps } from "@/types/modal";
-import { useAppSelector } from "@/hooks/store";
-import { getProducts } from "@/stores/slices/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/store";
+import {
+  decreaseProductQuantity,
+  getProducts,
+  increaseProductQuantity,
+} from "@/stores/slices/cartSlice";
+import { useMemo } from "react";
 
 const style = {
   position: "absolute",
@@ -21,7 +25,22 @@ const style = {
 export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
   const products = useAppSelector(getProducts);
 
-  console.log({ products });
+  const dispatch = useAppDispatch();
+
+  const onIncreaseProductQuantity = (id: number) => {
+    dispatch(increaseProductQuantity(id));
+  };
+
+  const onDecreaseProductQuantity = (id: number) => {
+    dispatch(decreaseProductQuantity(id));
+  };
+
+  //TODO: ask ai about the effectiveness of this 
+  const totalAmount = useMemo(() => {
+    return products.reduce((acc, product) => {
+      return acc + product.price * product.quantity;
+    }, 0);
+  }, [products]);
 
   return (
     <Modal
@@ -39,10 +58,19 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
         </Typography>
 
         <Box>
-          {checkoutBillItems.map((billItem) => (
-            <CartItem key={billItem.name} item={billItem} />
+          {products.map((cartItem) => (
+            <CartItem
+              key={cartItem.name}
+              item={cartItem}
+              onIncreaseQuantity={() => onIncreaseProductQuantity(cartItem.id)}
+              onDecreaseQuantity={() => onDecreaseProductQuantity(cartItem.id)}
+            />
           ))}
         </Box>
+
+        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          Total Amount : {totalAmount.toFixed(2)}
+        </Typography>
 
         <Button variant="contained" onClick={onCloseModal}>
           Close

@@ -15,6 +15,22 @@ export const cartSlice = createSlice({
   reducers: (create) => ({
     addProductToCart: create.reducer(
       (state, action: PayloadAction<CartItem>) => {
+        const existingProduct = state.products.find(
+          (product) => product.id === action.payload.id
+        );
+
+        if (existingProduct) {
+          state.products = state.products.map((product) =>
+            product.id === action.payload.id
+              ? {
+                  ...product,
+                  quantity: product.quantity + action.payload.quantity,
+                }
+              : product
+          );
+          return;
+        }
+
         state.products = [...state.products, action.payload];
       }
     ),

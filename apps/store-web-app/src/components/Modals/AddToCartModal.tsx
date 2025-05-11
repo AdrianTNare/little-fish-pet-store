@@ -1,8 +1,10 @@
+import { Product } from "@/types/product";
 import { CartModalProps } from "@/types/modal";
-import { checkoutBillItems } from "@/fixtures/fishProducts";
-import { Box, Button } from "@mui/material";
-import { Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import { CartItem } from "../CartItem";
+import { useAppDispatch } from "@/hooks/store";
+import { addProductToCart } from "@/stores/slices/cartSlice";
+import { useState } from "react";
 
 const style = {
   position: "absolute",
@@ -16,10 +18,29 @@ const style = {
   p: 4,
 };
 
+interface Props extends CartModalProps {
+  currentProduct: Product;
+}
+
 export const AddToCartModal = ({
   isModalOpen,
   onCloseModal,
-}: CartModalProps) => {
+  currentProduct,
+}: Props) => {
+  const dispatch = useAppDispatch();
+
+  const [quantity, setQuantity] = useState(1);
+
+  const onIncrement = () => setQuantity(quantity + 1);
+
+  const onDecrement = () => setQuantity(quantity - 1);
+
+  const onConfirm = () => {
+    dispatch(addProductToCart({ ...currentProduct, quantity }));
+
+    onCloseModal();
+  };
+
   return (
     <Modal
       open={isModalOpen}
@@ -33,17 +54,19 @@ export const AddToCartModal = ({
         </Typography>
 
         <Box>
-          {checkoutBillItems
-            .filter((_, index) => index < 1)
-            .map((billItem) => (
-              <CartItem key={billItem.name} item={billItem} />
-            ))}
+          <CartItem
+            item={{ ...currentProduct, quantity }}
+            onIncreaseQuantity={onIncrement}
+            onDecreaseQuantity={onDecrement}
+          />
         </Box>
 
         <Button variant="contained" onClick={onCloseModal}>
           Cancel
         </Button>
-        <Button variant="contained">Confirm</Button>
+        <Button variant="contained" onClick={onConfirm}>
+          Confirm
+        </Button>
       </Box>
     </Modal>
   );
