@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 
 export default function Home() {
   return (
-    <Box>
+    <Box height="100vh" display="flex" flexDirection="column">
       <Box
         height={60}
         mb={2}

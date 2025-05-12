@@ -1,14 +1,14 @@
-import { Box, Button } from "@mui/material";
-import { Modal, Typography } from "@mui/material";
-import { CartItem } from "../CartItem";
-import { CartModalProps } from "@/types/modal";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import {
   decreaseProductQuantity,
   getProducts,
   increaseProductQuantity,
 } from "@/stores/slices/cartSlice";
+import { CartModalProps } from "@/types/modal";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import { useMemo } from "react";
+import { CartItem } from "../CartItem";
+import { useRouter } from "next/navigation";
 
 const style = {
   position: "absolute",
@@ -23,9 +23,11 @@ const style = {
 };
 
 export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
-  const products = useAppSelector(getProducts);
+  const { push } = useRouter();
 
   const dispatch = useAppDispatch();
+
+  const products = useAppSelector(getProducts);
 
   const onIncreaseProductQuantity = (id: number) => {
     dispatch(increaseProductQuantity(id));
@@ -35,7 +37,13 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
     dispatch(decreaseProductQuantity(id));
   };
 
-  //TODO: ask ai about the effectiveness of this 
+  const onCheckout = () => {
+    onCloseModal();
+
+    push("/checkout");
+  };
+
+  //TODO: ask ai about the effectiveness of this
   const totalAmount = useMemo(() => {
     return products.reduce((acc, product) => {
       return acc + product.price * product.quantity;
@@ -75,7 +83,13 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
         <Button variant="contained" onClick={onCloseModal}>
           Close
         </Button>
-        <Button variant="contained">Checkout</Button>
+        <Button
+          variant="contained"
+          onClick={onCheckout}
+          disabled={!products.length}
+        >
+          Checkout
+        </Button>
       </Box>
     </Modal>
   );

@@ -1,15 +1,15 @@
 "use client";
 
-//import { fishProducts } from "@/fixtures/fishProducts";
 import { FishProductCard } from "./FishProductCard";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { useCartModal } from "./hooks/useCartModal";
 import { useState } from "react";
 import { PaginationInput } from "@/types/product";
 import { useGetAllPetFishQuery } from "@/stores/slices/api/productsApiSlice";
+import { useModal } from "./hooks/useModal";
+import { CartModal as Modal } from "./Modals/CartModal";
 
 export const PetFishList = () => {
-  const { onOpenModal, CartModal } = useCartModal();
+  const { onOpenModal, CartModal } = useModal(Modal);
 
   const [paginationInput, setPaginationInput] = useState<PaginationInput>({
     page: 1,
@@ -42,14 +42,20 @@ export const PetFishList = () => {
   return (
     <>
       <CartModal />
-      <Box position="relative">
+      <Box position="relative" flexGrow={1}>
         <Box
           width="100%"
           display="flex"
           flexDirection="column"
           alignItems="center"
         >
-          <Box display="flex" justifyContent="center" width="100%" overflow="scroll" height="68vh">
+          <Box
+            display="flex"
+            justifyContent="center"
+            width="100%"
+            overflow="scroll"
+            height="68vh"
+          >
             <Grid container spacing={2} width="100%" sx={{ maxWidth: 840 }}>
               {isError && <p>Error: failed to load data</p>}
 
