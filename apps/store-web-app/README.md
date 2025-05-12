@@ -1,32 +1,38 @@
+# Store Web App
+
+Next.js web application for the Little Fish Pet Store.
+
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+```bash
+pnpm install
+```
 
+2. Run the development server:
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- The app uses Next.js with TypeScript
+- Edit `app/page.tsx` to modify the main page
+- Uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) for font optimization
 
-### Todo :
+## Testing
 
-- implement tests for components within the app, using jest and the react testing library,
-- each test file should be right next to the component that it tests,
-- for the most part, test that the component renders correctly, and that its values are visible in the rendered ui.
+Tests are written using Jest and React Testing Library. Each component has its test file located next to it with the `.test.tsx` extension.
 
-6. **Running Tests**
+```bash
+# Run all tests
+pnpm test
 
-   ```bash
-   # Run all tests
-   pnpm test
+# Run tests in watch mode
+pnpm test:watch
 
-   # Run tests in watch mode
-   pnpm test:watch
-
-   # Run tests with coverage
-   pnpm test:coverage
-   ```
+# Run tests with coverage
+pnpm test:coverage
+```
