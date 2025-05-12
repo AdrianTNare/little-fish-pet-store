@@ -58,8 +58,8 @@ describe("PetFishList", () => {
   });
 
   it("renders loading state", () => {
-    mockUseGetAllPetFishQuery.mockImplementation(({ page, size }) => ({
-      data: createMockData(page, size),
+    mockUseGetAllPetFishQuery.mockImplementation(() => ({
+      data: undefined,
       isLoading: true,
       error: undefined,
     }));
@@ -68,8 +68,8 @@ describe("PetFishList", () => {
   });
 
   it("renders error state", () => {
-    mockUseGetAllPetFishQuery.mockImplementation(({ page, size }) => ({
-      data: createMockData(page, size),
+    mockUseGetAllPetFishQuery.mockImplementation(() => ({
+      data: undefined,
       isLoading: false,
       error: new Error("Failed to load"),
     }));
@@ -82,7 +82,7 @@ describe("PetFishList", () => {
     expect(screen.getByText("Fish 1")).toBeInTheDocument();
     expect(screen.getByText("Fish 2")).toBeInTheDocument();
     expect(
-      screen.getByText((_, node) => node?.textContent === "Total: 20")
+      screen.getByText((_, node) => node?.textContent === "Total: 20"),
     ).toBeInTheDocument();
     expect(screen.getByText("page: 1")).toBeInTheDocument();
     expect(screen.getByText("Previous")).toBeInTheDocument();
@@ -103,7 +103,7 @@ describe("PetFishList", () => {
     // Find the Typography element that contains the page number
     const paginationBox = screen.getByText("Previous").parentElement;
     const pageTypography = paginationBox?.querySelector(
-      "[class*=MuiTypography-root]"
+      "[class*=MuiTypography-root]",
     );
     expect(pageTypography?.textContent).toContain("2");
     // Go back to first page
@@ -115,10 +115,9 @@ describe("PetFishList", () => {
 
   it("opens the CartModal when cart button is clicked", () => {
     render(<PetFishList />);
-    const cartButton = screen.getByRole('button', { name: /cart/i });
+    const cartButton = screen.getByRole("button", { name: /cart/i });
     fireEvent.click(cartButton);
     expect(mockOnOpenModal).toHaveBeenCalled();
-    expect(screen.getByText('Cart Modal')).toBeInTheDocument();
+    expect(screen.getByText("Cart Modal")).toBeInTheDocument();
   });
 });
-

@@ -47,6 +47,7 @@ export const CartItem = ({
             onClick={onDecreaseQuantity}
             disabled={!removable && item.quantity <= 1}
             sx={{ border: 1, borderColor: "divider" }}
+            aria-label="remove"
           >
             <RemoveIcon fontSize="small" />
           </IconButton>
@@ -58,6 +59,7 @@ export const CartItem = ({
             onClick={onIncreaseQuantity}
             color="primary"
             sx={{ border: 1, borderColor: "primary.main" }}
+            aria-label="add"
           >
             <AddIcon fontSize="small" />
           </IconButton>

@@ -47,27 +47,27 @@ export const PetFishList = () => {
         alignItems="center"
       >
         {isError && (
-          <Alert 
+          <Alert
             severity="warning"
-            sx={{ 
+            sx={{
               height: 36,
-              mb: 2
+              mb: 2,
             }}
           >
-            Error Loading Fish
+            Error: failed to load data
           </Alert>
         )}
 
         {isLoading && (
-          <Alert 
+          <Alert
             severity="info"
             variant="outlined"
-            sx={{ 
+            sx={{
               height: 36,
-              mb: 2
+              mb: 2,
             }}
           >
-            Loading Fish
+            Loading...
           </Alert>
         )}
 
@@ -79,8 +79,7 @@ export const PetFishList = () => {
           flexGrow={1}
           maxHeight="76vh"
         >
-          <Grid container spacing={2} sx={{ width: '100%', maxWidth: 840 }}>
-
+          <Grid container spacing={2} sx={{ width: "100%", maxWidth: 840 }}>
             {data?.products && (
               <>
                 {data.products.map((pet) => (
