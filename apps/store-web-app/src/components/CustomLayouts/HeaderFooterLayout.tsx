@@ -7,14 +7,13 @@ export const HeaderFooterLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <Box height="100vh" display="flex" flexDirection="column" position="relative">
+    <Box height="100vh" maxHeight="100vh" display="flex" flexDirection="column" position="relative">
       <Header />
 
       <Box flexGrow={1}>{children}</Box>
 
       <Box
         height={32}
-        mt={2}
         display="flex"
         alignItems="center"
         justifyContent="center"

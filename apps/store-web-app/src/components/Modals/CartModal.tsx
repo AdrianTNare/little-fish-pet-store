@@ -9,7 +9,6 @@ import { Box, Button, Modal, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useMemo } from "react";
 import { CartItem } from "../CartItem";
 import { useRouter } from "next/navigation";
 
@@ -50,11 +49,7 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
   };
 
   //TODO: ask ai about the effectiveness of this
-  const totalAmount = useMemo(() => {
-    return products.reduce((acc, product) => {
-      return acc + product.price * product.quantity;
-    }, 0);
-  }, [products]);
+  const totalAmount = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
   return (
     <Modal
@@ -64,14 +59,16 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Box sx={{ 
-          p: 2, 
-          borderBottom: 1, 
-          borderColor: "divider",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center"
-        }}>
+        <Box
+          sx={{
+            p: 2,
+            borderBottom: 1,
+            borderColor: "divider",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Typography variant="h6" component="h2">
             Shopping Cart
           </Typography>
@@ -80,11 +77,13 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
           </IconButton>
         </Box>
 
-        <Box sx={{ 
-          flex: 1, 
-          overflowY: "auto", 
-          p: 3,
-        }}>
+        <Box
+          sx={{
+            flex: 1,
+            overflowY: "auto",
+            p: 3,
+          }}
+        >
           {products.length === 0 ? (
             <Typography color="text.secondary" textAlign="center">
               Your cart is empty
@@ -92,27 +91,36 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
           ) : (
             products.map((cartItem) => (
               <CartItem
-                key={cartItem.name}
+                key={cartItem.id}
                 item={cartItem}
-                onIncreaseQuantity={() => onIncreaseProductQuantity(cartItem.id)}
-                onDecreaseQuantity={() => onDecreaseProductQuantity(cartItem.id)}
+                removable
+                onIncreaseQuantity={() =>
+                  onIncreaseProductQuantity(cartItem.id)
+                }
+                onDecreaseQuantity={() =>
+                  onDecreaseProductQuantity(cartItem.id)
+                }
               />
             ))
           )}
         </Box>
 
-        <Box sx={{ 
-          p: 2,
-          borderTop: 1,
-          borderColor: "divider",
-          bgcolor: "background.default"
-        }}>
-          <Box sx={{ 
-            display: "flex", 
-            justifyContent: "space-between",
-            alignItems: "center",
-            mb: 2
-          }}>
+        <Box
+          sx={{
+            p: 2,
+            borderTop: 1,
+            borderColor: "divider",
+            bgcolor: "background.default",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
             <Typography variant="subtitle1" fontWeight="bold">
               Total Amount
             </Typography>
@@ -121,13 +129,15 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
             </Typography>
           </Box>
 
-          <Box sx={{ 
-            display: "flex", 
-            gap: 2, 
-            justifyContent: "flex-end"
-          }}>
-            <Button 
-              variant="outlined" 
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              variant="outlined"
               onClick={onCloseModal}
               startIcon={<CancelIcon />}
               sx={{ minWidth: 100 }}

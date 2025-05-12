@@ -1,9 +1,9 @@
 "use client";
 
-import { FC, useState } from "react";
+import { ComponentType, useState } from "react";
 import { CartModalProps } from "@/types/modal";
 
-export const useModal = <T extends CartModalProps>(Modal: FC<T>) => {
+export const useModal = <T extends CartModalProps>(Modal: ComponentType<T>) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onCloseModal = () => {
@@ -14,7 +14,7 @@ export const useModal = <T extends CartModalProps>(Modal: FC<T>) => {
     setIsModalOpen(true);
   };
 
-  const CartModal: FC<Omit<T, keyof CartModalProps>> = (props) => (
+  const CartModal = (props: Omit<T, keyof CartModalProps>) => (
     <Modal
       {...(props as T)}
       onCloseModal={onCloseModal}

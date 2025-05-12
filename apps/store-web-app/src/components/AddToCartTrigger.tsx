@@ -5,7 +5,7 @@ import { Product } from "@/types/product";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useModal } from "./hooks/useModal";
-import { AddToCartModal as Modal } from "./Modals/AddToCartModal";
+import { LazyAddToCartModal as Modal } from "./lazy";
 import { useRouter } from "next/navigation";
 
 interface Pros {

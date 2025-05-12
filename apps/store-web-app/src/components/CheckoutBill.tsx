@@ -9,18 +9,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import PaymentIcon from "@mui/icons-material/Payment";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useMemo } from "react";
 
 export const CheckoutBill = () => {
   const { back, push } = useRouter();
   const pathname = usePathname();
   const products = useAppSelector(getProducts);
 
-  const totalAmount = useMemo(() => {
-    return products.reduce((acc, product) => {
-      return acc + product.price * product.quantity;
-    }, 0);
-  }, [products]);
+  const totalAmount = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
   const onPay = () => {
     push("/complete");
@@ -43,7 +38,7 @@ export const CheckoutBill = () => {
 
       <Box sx={{ mb: 4 }}>
         {products.map((billItem) => (
-          <CheckoutBillItem key={billItem.name} item={billItem} />
+          <CheckoutBillItem key={billItem.id} item={billItem} />
         ))}
       </Box>
 

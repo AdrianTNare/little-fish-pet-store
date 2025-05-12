@@ -4,12 +4,14 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 interface props {
   item: CartItemType;
+  removable?: boolean;
   onIncreaseQuantity?: () => void;
   onDecreaseQuantity?: () => void;
 }
 
 export const CartItem = ({
   item,
+  removable = false,
   onIncreaseQuantity,
   onDecreaseQuantity,
 }: props) => {
@@ -43,7 +45,7 @@ export const CartItem = ({
           <IconButton
             size="small"
             onClick={onDecreaseQuantity}
-            disabled={item.quantity <= 1}
+            disabled={!removable && item.quantity <= 1}
             sx={{ border: 1, borderColor: "divider" }}
           >
             <RemoveIcon fontSize="small" />

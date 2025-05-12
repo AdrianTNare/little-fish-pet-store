@@ -1,10 +1,10 @@
 "use client";
 
 import { FishProductCard } from "./FishProductCard";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Alert, Box, Button, Grid, Typography } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { PaginationInput } from "@/types/product";
 import { useGetAllPetFishQuery } from "@/stores/slices/api/productsApiSlice";
 import { ProductCartTrigger } from "./ProductCartTrigger";
@@ -21,7 +21,7 @@ export const PetFishList = () => {
     error: isError,
   } = useGetAllPetFishQuery(paginationInput);
 
-  const onNextPage = () => {
+  const onNextPage = useCallback(() => {
     setPaginationInput((currentInput) => ({
       ...currentInput,
       page:
@@ -29,14 +29,14 @@ export const PetFishList = () => {
           ? currentInput.page + 1
           : currentInput.page,
     }));
-  };
+  }, [data?.total]);
 
-  const onPreviousPage = () => {
+  const onPreviousPage = useCallback(() => {
     setPaginationInput((currentInput) => ({
       ...currentInput,
       page: currentInput.page > 1 ? currentInput.page - 1 : 1,
     }));
-  };
+  }, []);
 
   return (
     <>
@@ -46,22 +46,45 @@ export const PetFishList = () => {
         flexDirection="column"
         alignItems="center"
       >
+        {isError && (
+          <Alert 
+            severity="warning"
+            sx={{ 
+              height: 36,
+              mb: 2
+            }}
+          >
+            Error Loading Fish
+          </Alert>
+        )}
+
+        {isLoading && (
+          <Alert 
+            severity="info"
+            variant="outlined"
+            sx={{ 
+              height: 36,
+              mb: 2
+            }}
+          >
+            Loading Fish
+          </Alert>
+        )}
+
         <Box
           display="flex"
           justifyContent="center"
           width="100%"
           overflow="scroll"
-          height="68vh"
+          flexGrow={1}
+          maxHeight="76vh"
         >
-          <Grid container spacing={2} width="100%" sx={{ maxWidth: 840 }}>
-            {isError && <p>Error: failed to load data</p>}
-
-            {isLoading && <p>Loading...</p>}
+          <Grid container spacing={2} sx={{ width: '100%', maxWidth: 840 }}>
 
             {data?.products && (
               <>
                 {data.products.map((pet) => (
-                  <FishProductCard key={pet.name} product={pet} />
+                  <FishProductCard key={pet.id} product={pet} />
                 ))}
               </>
             )}
@@ -69,13 +92,13 @@ export const PetFishList = () => {
         </Box>
 
         {data?.total && (
-          <Typography variant="body2" mb={2}>
+          <Typography variant="body2" mt={2} mb={1}>
             Total: {data.total}
           </Typography>
         )}
-        <Box display="flex" alignItems="center" columnGap={2} mb={2}>
-          <Button 
-            size="small" 
+        <Box display="flex" alignItems="center" columnGap={2} mb={1}>
+          <Button
+            size="small"
             onClick={onPreviousPage}
             startIcon={<NavigateBeforeIcon />}
           >
@@ -84,8 +107,8 @@ export const PetFishList = () => {
 
           <Typography variant="body2">page: {paginationInput.page}</Typography>
 
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             onClick={onNextPage}
             endIcon={<NavigateNextIcon />}
           >

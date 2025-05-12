@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@mui/material";
-import { CartModal as Modal } from "./Modals/CartModal";
+import { LazyCartModal as Modal } from "./lazy";
 import { useModal } from "./hooks/useModal";
 import { ShoppingCart } from "lucide-react";
 
