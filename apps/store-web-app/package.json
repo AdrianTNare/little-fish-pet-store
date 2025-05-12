@@ -40,5 +40,10 @@
     "ts-jest": "^29.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx}": "eslint --cache --fix",
+    "src/**/*.{js,ts,tsx,css,md}": "prettier --write",
+    "_src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}": "jest --findRelatedTests $(git diff --staged --name-only)"
   }
 }

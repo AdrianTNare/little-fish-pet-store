@@ -1,0 +1,3 @@
+
+cd apps/store-web-app
+npx lint-staged
