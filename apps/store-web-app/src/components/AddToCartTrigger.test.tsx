@@ -14,6 +14,7 @@ jest.mock('./hooks/useModal', () => {
 
 import { render, screen, fireEvent } from '../test/utils';
 import { AddToCartTrigger } from './AddToCartTrigger';
+import { Product } from '@/types/product';
 
 // Mock the cartSlice module
 jest.mock('../stores/slices/cartSlice', () => ({
@@ -29,7 +30,7 @@ jest.mock('../stores/slices/cartSlice', () => ({
 }));
 
 describe('AddToCartTrigger', () => {
-  const mockProduct = {
+  const mockProduct: Product = {
     id: 1,
     name: 'Test Product',
     price: 99.99,
@@ -39,8 +40,8 @@ describe('AddToCartTrigger', () => {
   beforeEach(() => {
     globalThis.mockUseModal.mockImplementation(() => ({
       onOpenModal: jest.fn(),
-      CartModal: ({ currentProduct }: { currentProduct: any }) => (
-        <div data-testid="add-to-cart-modal">
+      CartModal: ({ currentProduct }: { currentProduct: Product }) => (
+        <div>
           Modal for {currentProduct.name}
         </div>
       ),
@@ -59,7 +60,6 @@ describe('AddToCartTrigger', () => {
 
   it('renders the modal with the correct product', () => {
     render(<AddToCartTrigger product={mockProduct} />);
-    expect(screen.getByTestId('add-to-cart-modal')).toBeInTheDocument();
     expect(screen.getByText(`Modal for ${mockProduct.name}`)).toBeInTheDocument();
   });
 
@@ -67,8 +67,8 @@ describe('AddToCartTrigger', () => {
     const mockOnOpenModal = jest.fn();
     globalThis.mockUseModal.mockImplementation(() => ({
       onOpenModal: mockOnOpenModal,
-      CartModal: ({ currentProduct }: { currentProduct: any }) => (
-        <div data-testid="add-to-cart-modal">
+      CartModal: ({ currentProduct }: { currentProduct: Product }) => (
+        <div>
           Modal for {currentProduct.name}
         </div>
       ),

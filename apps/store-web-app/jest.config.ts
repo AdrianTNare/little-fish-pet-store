@@ -29,8 +29,12 @@ const config: Config = {
     }
   },
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
-  }
+    '^.+\\.(ts|tsx)$': ['ts-jest', {
+      tsconfig: 'tsconfig.jest.json',
+      useESM: true
+    }]
+  },
+  preset: 'ts-jest'
 };
 
 export default config;

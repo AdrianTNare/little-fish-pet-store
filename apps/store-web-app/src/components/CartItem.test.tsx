@@ -1,8 +1,9 @@
 import { render, screen, fireEvent } from '../test/utils';
 import { CartItem } from './CartItem';
+import { CartItem as CartItemType } from '@/types/product';
 
 describe('CartItem', () => {
-  const mockItem = {
+  const mockItem: CartItemType = {
     id: 1,
     name: 'Test Product',
     price: 99.99,
@@ -19,7 +20,7 @@ describe('CartItem', () => {
     render(<CartItem item={mockItem} />);
     expect(screen.getByText('-')).toBeInTheDocument();
     expect(screen.getByText('+')).toBeInTheDocument();
-    expect(screen.getByText(mockItem.quantity)).toBeInTheDocument();
+    expect(screen.getByText(mockItem.quantity.toString())).toBeInTheDocument();
   });
 
   it('calls onDecreaseQuantity when minus button is clicked', () => {

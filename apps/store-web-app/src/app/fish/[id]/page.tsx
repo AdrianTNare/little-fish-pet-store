@@ -21,7 +21,7 @@ export default async function Product({ params }: Props) {
   const product = fishProducts.find((product) => product.id === parseInt(id));
 
   return (
-    <Box height="100vh" display="relative">
+    <Box height="100%">
       {!product && <p>Product not found</p>}
 
       {product && (
@@ -40,17 +40,7 @@ export default async function Product({ params }: Props) {
         </>
       )}
 
-      <Box
-        position="sticky"
-        width="100%"
-        display="flex"
-        justifyContent="end"
-        zIndex={1}
-        pr={2}
-        bottom={0}
-      >
-        <ProductCartTrigger />
-      </Box>
+      <ProductCartTrigger />
     </Box>
   );
 }

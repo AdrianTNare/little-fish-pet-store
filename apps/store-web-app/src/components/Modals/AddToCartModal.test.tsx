@@ -1,12 +1,14 @@
 import { render, screen, fireEvent } from '../../test/utils';
 import { AddToCartModal } from './AddToCartModal';
 import React from 'react';
+import { CartItem, Product } from '@/types/product';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 jest.mock('../CartItem', () => ({
-  CartItem: ({ item, onIncreaseQuantity, onDecreaseQuantity }: any) => (
+  CartItem: ({ item, onIncreaseQuantity, onDecreaseQuantity }: {item: CartItem; onIncreaseQuantity: () => void; onDecreaseQuantity: () => void}) => (
     <div>
-      <span data-testid="cart-item-name">{item.name}</span>
-      <span data-testid="cart-item-quantity">{item.quantity}</span>
+      <span>{item.name}</span>
+      <span>{item.quantity}</span>
       <button onClick={onDecreaseQuantity}>-</button>
       <button onClick={onIncreaseQuantity}>+</button>
     </div>
@@ -20,11 +22,12 @@ jest.mock('@/hooks/store', () => ({
 
 // Mock addProductToCart to avoid ESM/CJS issues
 export const mockAddProductToCart = jest.fn();
+
 jest.mock('@/stores/slices/cartSlice', () => ({
-  addProductToCart: (...args: any[]) => mockAddProductToCart(...args),
+  addProductToCart: (payload: CartItem): PayloadAction<CartItem> => mockAddProductToCart(payload),
 }));
 
-const mockProduct = {
+const mockProduct: Product = {
   id: 1,
   name: 'Test Product',
   price: 99.99,
@@ -43,8 +46,8 @@ describe('AddToCartModal', () => {
       <AddToCartModal isModalOpen={true} onCloseModal={onCloseModal} currentProduct={mockProduct} />
     );
     expect(screen.getByText('Add to Cart')).toBeInTheDocument();
-    expect(screen.getByTestId('cart-item-name')).toHaveTextContent(mockProduct.name);
-    expect(screen.getByTestId('cart-item-quantity')).toHaveTextContent('1');
+    expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
+    expect(screen.getByText('1')).toBeInTheDocument();
     expect(screen.getByText('Cancel')).toBeInTheDocument();
     expect(screen.getByText('Confirm')).toBeInTheDocument();
   });
@@ -55,13 +58,12 @@ describe('AddToCartModal', () => {
     );
     const plus = screen.getByText('+');
     const minus = screen.getByText('-');
-    const quantity = screen.getByTestId('cart-item-quantity');
     // Increment
     fireEvent.click(plus);
-    expect(quantity).toHaveTextContent('2');
+    expect(screen.getByText('2')).toBeInTheDocument();
     // Decrement
     fireEvent.click(minus);
-    expect(quantity).toHaveTextContent('1');
+    expect(screen.getByText('1')).toBeInTheDocument();
   });
 
   it('calls onCloseModal when cancel is clicked', () => {

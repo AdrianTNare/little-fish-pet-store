@@ -9,6 +9,7 @@ import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 import { theme } from "@/theme";
 import { StoreProvider } from "./StoreProvider";
 import { PersistGateProvider } from "./PersistGateProvider";
+import { HeaderFooterLayout } from "@/components/CustomLayouts/HeaderFooterLayout";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -46,7 +47,7 @@ export default function RootLayout({
             <ModeSwitch />
         */}
 
-              {children}
+              <HeaderFooterLayout>{children}</HeaderFooterLayout>
             </ThemeProvider>
           </PersistGateProvider>
         </StoreProvider>
