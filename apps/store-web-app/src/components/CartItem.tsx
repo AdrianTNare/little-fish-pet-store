@@ -1,5 +1,7 @@
 import { CartItem as CartItemType } from "@/types/product";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 interface props {
   item: CartItemType;
   onIncreaseQuantity?: () => void;
@@ -12,23 +14,56 @@ export const CartItem = ({
   onDecreaseQuantity,
 }: props) => {
   return (
-    <Box>
-      <Typography>Name of product : {item.name}</Typography>
-      <Typography>Price : {item.price}</Typography>
-
-      <Box display="flex">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={onDecreaseQuantity}
-        >
-          -
-        </Button>
-        <Typography mx={5}>{item.quantity}</Typography>
-        <Button variant="contained" size="small" onClick={onIncreaseQuantity}>
-          +
-        </Button>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+        py: 2,
+        borderBottom: "1px solid",
+        borderColor: "divider",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Box>
+          <Typography variant="subtitle1" fontWeight="medium">
+            {item.name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            ${item.price.toFixed(2)}
+          </Typography>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <IconButton
+            size="small"
+            onClick={onDecreaseQuantity}
+            disabled={item.quantity <= 1}
+            sx={{ border: 1, borderColor: "divider" }}
+          >
+            <RemoveIcon fontSize="small" />
+          </IconButton>
+          <Typography sx={{ minWidth: 30, textAlign: "center" }}>
+            {item.quantity}
+          </Typography>
+          <IconButton
+            size="small"
+            onClick={onIncreaseQuantity}
+            color="primary"
+            sx={{ border: 1, borderColor: "primary.main" }}
+          >
+            <AddIcon fontSize="small" />
+          </IconButton>
+        </Box>
       </Box>
+      <Typography variant="body2" color="text.secondary" align="right">
+        Subtotal: ${(item.price * item.quantity).toFixed(2)}
+      </Typography>
     </Box>
   );
 };

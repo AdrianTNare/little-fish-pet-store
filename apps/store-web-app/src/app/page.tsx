@@ -1,4 +1,14 @@
 import { PetFishList } from "@/components/PetFishList";
+import { Box } from "@mui/material";
+
 export default function Home() {
-  return <PetFishList />;
+  return (
+    <Box
+      sx={{
+        bgcolor: "background.default",
+      }}
+    >
+      <PetFishList />
+    </Box>
+  );
 }

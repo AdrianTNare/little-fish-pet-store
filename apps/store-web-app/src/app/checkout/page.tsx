@@ -3,9 +3,11 @@ import { Box } from "@mui/material";
 
 export default function Checkout() {
   return (
-    <Box height="100%">
-      <p> This is the checkout page </p>
-
+    <Box
+      sx={{
+        bgcolor: "background.default",
+      }}
+    >
       <CheckoutBill />
     </Box>
   );

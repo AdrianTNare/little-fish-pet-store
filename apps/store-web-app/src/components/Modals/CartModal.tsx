@@ -5,7 +5,10 @@ import {
   increaseProductQuantity,
 } from "@/stores/slices/cartSlice";
 import { CartModalProps } from "@/types/modal";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useMemo } from "react";
 import { CartItem } from "../CartItem";
 import { useRouter } from "next/navigation";
@@ -16,10 +19,13 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
+  maxHeight: "90vh",
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: 1,
   boxShadow: 24,
-  p: 4,
+  p: 0,
+  display: "flex",
+  flexDirection: "column",
 };
 
 export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
@@ -58,38 +64,87 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Cart
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Products will be listed here
-        </Typography>
-
-        <Box>
-          {products.map((cartItem) => (
-            <CartItem
-              key={cartItem.name}
-              item={cartItem}
-              onIncreaseQuantity={() => onIncreaseProductQuantity(cartItem.id)}
-              onDecreaseQuantity={() => onDecreaseProductQuantity(cartItem.id)}
-            />
-          ))}
+        <Box sx={{ 
+          p: 2, 
+          borderBottom: 1, 
+          borderColor: "divider",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center"
+        }}>
+          <Typography variant="h6" component="h2">
+            Shopping Cart
+          </Typography>
+          <IconButton size="small" onClick={onCloseModal} aria-label="close">
+            <CloseIcon fontSize="small" />
+          </IconButton>
         </Box>
 
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Total Amount : {totalAmount.toFixed(2)}
-        </Typography>
+        <Box sx={{ 
+          flex: 1, 
+          overflowY: "auto", 
+          p: 3,
+        }}>
+          {products.length === 0 ? (
+            <Typography color="text.secondary" textAlign="center">
+              Your cart is empty
+            </Typography>
+          ) : (
+            products.map((cartItem) => (
+              <CartItem
+                key={cartItem.name}
+                item={cartItem}
+                onIncreaseQuantity={() => onIncreaseProductQuantity(cartItem.id)}
+                onDecreaseQuantity={() => onDecreaseProductQuantity(cartItem.id)}
+              />
+            ))
+          )}
+        </Box>
 
-        <Button variant="outlined" onClick={onCloseModal}>
-          Close
-        </Button>
-        <Button
-          variant="contained"
-          onClick={onCheckout}
-          disabled={!products.length}
-        >
-          Checkout
-        </Button>
+        <Box sx={{ 
+          p: 2,
+          borderTop: 1,
+          borderColor: "divider",
+          bgcolor: "background.default"
+        }}>
+          <Box sx={{ 
+            display: "flex", 
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 2
+          }}>
+            <Typography variant="subtitle1" fontWeight="bold">
+              Total Amount
+            </Typography>
+            <Typography variant="subtitle1" fontWeight="bold">
+              ${totalAmount.toFixed(2)}
+            </Typography>
+          </Box>
+
+          <Box sx={{ 
+            display: "flex", 
+            gap: 2, 
+            justifyContent: "flex-end"
+          }}>
+            <Button 
+              variant="outlined" 
+              onClick={onCloseModal}
+              startIcon={<CancelIcon />}
+              sx={{ minWidth: 100 }}
+            >
+              Close
+            </Button>
+            <Button
+              variant="contained"
+              onClick={onCheckout}
+              disabled={!products.length}
+              startIcon={<ShoppingCartCheckoutIcon />}
+              sx={{ minWidth: 100 }}
+            >
+              Checkout
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Modal>
   );

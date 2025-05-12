@@ -21,24 +21,62 @@ export default async function Product({ params }: Props) {
   const product = fishProducts.find((product) => product.id === parseInt(id));
 
   return (
-    <Box height="100%">
-      {!product && <p>Product not found</p>}
-
-      {product && (
-        <>
-          <Typography mb={0.5} fontWeight="bold" fontSize="small">
-            {product.price}
+    <Box
+      sx={{
+        bgcolor: "background.default",
+        py: 4,
+      }}
+    >
+      <Box
+        sx={{
+          maxWidth: 600,
+          mx: "auto",
+          p: 3,
+          bgcolor: "background.paper",
+          borderRadius: 1,
+          boxShadow: 1,
+        }}
+      >
+        {!product && (
+          <Typography variant="h6" textAlign="center">
+            Product not found
           </Typography>
+        )}
 
-          <Typography mb={1} fontWeight="bold">
-            {product.name}
-          </Typography>
+        {product && (
+          <>
+            <Typography variant="h5" sx={{ mb: 3, textAlign: "center" }}>
+              {product.name}
+            </Typography>
 
-          <Typography fontSize="small">{product.description}</Typography>
+            <Box sx={{ mb: 4 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  mb: 2,
+                  pb: 2,
+                  borderBottom: 1,
+                  borderColor: "divider",
+                }}
+              >
+                <Typography variant="h6">Price</Typography>
+                <Typography variant="h6">
+                  ${product.price.toFixed(2)}
+                </Typography>
+              </Box>
 
-          <AddToCartTrigger product={product} />
-        </>
-      )}
+              <Typography variant="body1" sx={{ mb: 4 }}>
+                {product.description}
+              </Typography>
+
+              <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
+                <AddToCartTrigger product={product} />
+              </Box>
+            </Box>
+          </>
+        )}
+      </Box>
 
       <ProductCartTrigger />
     </Box>

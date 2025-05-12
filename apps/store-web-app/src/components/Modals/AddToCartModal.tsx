@@ -1,7 +1,10 @@
 import { Product } from "@/types/product";
 import { CartModalProps } from "@/types/modal";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography, IconButton } from "@mui/material";
 import { CartItem } from "../CartItem";
+import CloseIcon from "@mui/icons-material/Close";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useAppDispatch } from "@/hooks/store";
 import { addProductToCart } from "@/stores/slices/cartSlice";
 import { useState } from "react";
@@ -13,9 +16,9 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: 1,
   boxShadow: 24,
-  p: 4,
+  p: 0,
 };
 
 interface Props extends CartModalProps {
@@ -49,11 +52,23 @@ export const AddToCartModal = ({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Add to Cart
-        </Typography>
+        <Box sx={{ 
+          p: 2, 
+          borderBottom: 1, 
+          borderColor: "divider",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center"
+        }}>
+          <Typography variant="h6" component="h2">
+            Add to Cart
+          </Typography>
+          <IconButton size="small" onClick={onCloseModal} aria-label="close">
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </Box>
 
-        <Box>
+        <Box sx={{ p: 3 }}>
           <CartItem
             item={{ ...currentProduct, quantity }}
             onIncreaseQuantity={onIncrement}
@@ -61,12 +76,31 @@ export const AddToCartModal = ({
           />
         </Box>
 
-        <Button variant="outlined" onClick={onCloseModal}>
-          Cancel
-        </Button>
-        <Button variant="contained" onClick={onConfirm}>
-          Confirm
-        </Button>
+        <Box sx={{ 
+          display: "flex", 
+          gap: 2, 
+          justifyContent: "flex-end",
+          p: 2,
+          borderTop: 1,
+          borderColor: "divider"
+        }}>
+          <Button 
+            variant="outlined" 
+            onClick={onCloseModal}
+            startIcon={<CancelIcon />}
+            sx={{ minWidth: 100 }}
+          >
+            Cancel
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={onConfirm}
+            startIcon={<ShoppingCartIcon />}
+            sx={{ minWidth: 100 }}
+          >
+            Add
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );

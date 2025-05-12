@@ -2,6 +2,8 @@
 
 import { FishProductCard } from "./FishProductCard";
 import { Box, Button, Grid, Typography } from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { useState } from "react";
 import { PaginationInput } from "@/types/product";
 import { useGetAllPetFishQuery } from "@/stores/slices/api/productsApiSlice";
@@ -72,13 +74,21 @@ export const PetFishList = () => {
           </Typography>
         )}
         <Box display="flex" alignItems="center" columnGap={2} mb={2}>
-          <Button size="small" onClick={onPreviousPage}>
+          <Button 
+            size="small" 
+            onClick={onPreviousPage}
+            startIcon={<NavigateBeforeIcon />}
+          >
             Previous
           </Button>
 
           <Typography variant="body2">page: {paginationInput.page}</Typography>
 
-          <Button size="small" onClick={onNextPage}>
+          <Button 
+            size="small" 
+            onClick={onNextPage}
+            endIcon={<NavigateNextIcon />}
+          >
             Next
           </Button>
         </Box>
