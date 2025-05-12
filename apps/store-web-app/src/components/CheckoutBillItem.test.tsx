@@ -16,7 +16,7 @@ describe("CheckoutBillItem", () => {
     expect(screen.getByText(mockItem.name)).toBeInTheDocument();
   });
 
-  it("renders the item price", () => {
+  it("renders the quantity and price", () => {
     render(<CheckoutBillItem item={mockItem} />);
     expect(screen.getByText("Quantity")).toBeInTheDocument();
     expect(
