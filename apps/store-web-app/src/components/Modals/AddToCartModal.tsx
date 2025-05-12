@@ -61,7 +61,7 @@ export const AddToCartModal = ({
           />
         </Box>
 
-        <Button variant="contained" onClick={onCloseModal}>
+        <Button variant="outlined" onClick={onCloseModal}>
           Cancel
         </Button>
         <Button variant="contained" onClick={onConfirm}>

@@ -20,7 +20,6 @@ export const CartItem = ({
         <Button
           variant="outlined"
           size="small"
-          disabled={item.quantity === 1}
           onClick={onDecreaseQuantity}
         >
           -

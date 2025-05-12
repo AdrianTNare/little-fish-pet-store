@@ -45,11 +45,13 @@ export const cartSlice = createSlice({
     ),
     decreaseProductQuantity: create.reducer(
       (state, action: PayloadAction<number>) => {
-        state.products = state.products.map((product) =>
-          product.id !== action.payload || product.quantity < 1
-            ? product
-            : { ...product, quantity: product.quantity - 1 }
-        );
+        state.products = state.products
+          .map((product) =>
+            product.id !== action.payload
+              ? product
+              : { ...product, quantity: product.quantity - 1 }
+          )
+          .filter((product) => product.quantity > 0);
       }
     ),
   }),

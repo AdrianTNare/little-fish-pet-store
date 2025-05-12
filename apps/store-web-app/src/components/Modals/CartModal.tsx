@@ -80,7 +80,7 @@ export const CartModal = ({ isModalOpen, onCloseModal }: CartModalProps) => {
           Total Amount : {totalAmount.toFixed(2)}
         </Typography>
 
-        <Button variant="contained" onClick={onCloseModal}>
+        <Button variant="outlined" onClick={onCloseModal}>
           Close
         </Button>
         <Button

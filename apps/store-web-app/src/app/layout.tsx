@@ -8,6 +8,7 @@ import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 //import ModeSwitch from "@/components/ModeSwitch";
 import { theme } from "@/theme";
 import { StoreProvider } from "./StoreProvider";
+import { PersistGateProvider } from "./PersistGateProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -35,17 +36,19 @@ export default function RootLayout({
         */}
 
         <StoreProvider>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
+          <PersistGateProvider>
+            <ThemeProvider theme={theme}>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
 
-            {/*
+              {/*
 
             <ModeSwitch />
         */}
 
-            {children}
-          </ThemeProvider>
+              {children}
+            </ThemeProvider>
+          </PersistGateProvider>
         </StoreProvider>
 
         {/*
