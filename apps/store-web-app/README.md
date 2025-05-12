@@ -5,11 +5,13 @@ Next.js web application for the Little Fish Pet Store.
 ## Getting Started
 
 1. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
 2. Run the development server:
+
 ```bash
 pnpm dev
 ```
@@ -36,3 +38,9 @@ pnpm test:watch
 # Run tests with coverage
 pnpm test:coverage
 ```
+
+## Outstanding features:
+
+- [ ] payment gateway integration
+- [ ] Security and Auth
+- [ ] filtering
