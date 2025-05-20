@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { AddToCartTrigger } from "@/components/AddToCartTrigger";
 import { ProductCartTrigger } from "@/components/ProductCartTrigger";
 import { fishProducts } from "@/fixtures/fishProducts";
 import { Box, Typography } from "@mui/material";
+
+export const metadata: Metadata = {
+  title: "Pet-fish",
+  description: "Pet-fish details",
+};
 
 interface Params {
   id: string;
