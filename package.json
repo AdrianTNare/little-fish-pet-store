@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky",
-    "dev": "pnpm -r dev",
+    "dev": "rm -f ./apps/backend/bin/Debug/net9.0/package.json && pnpm -r dev",
     "lint": "pnpm -r lint",
-    "build": "pnpm -r build",
+    "build": "rm -f ./apps/backend/bin/Debug/net9.0/package.json && pnpm -r build",
     "test": "pnpm -r test",
     "start": "pnpm -r start"
   },
